@@ -1,2 +1,41 @@
 Maximum Subsequences In String 
 https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/solutions/1863993/c-simple-o-n-with-steps/
+
+Candies 
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int candyStepCount(vector<int>& candies, int targetSweetness) {
+    sort(candies.begin(), candies.end());
+    int steps = 0;
+
+    while (candies.size() >= 2 && candies[0] < targetSweetness) {
+        int combinedSweetness = candies[0] + 2 * candies[1];
+        candies.erase(candies.begin(), candies.begin() + 2);
+        candies.insert(lower_bound(candies.begin(), candies.end(), combinedSweetness), combinedSweetness);
+        steps++;
+    }
+
+    if (!candies.empty() && candies[0] >= targetSweetness) {
+        return steps;
+    }
+
+    return -1; // Target sweetness cannot be reached
+}
+
+int main() {
+    vector<int> candies;
+    int targetSweetness;
+    cin >> targetSweetness;
+    int candy;
+    
+    while (cin >> candy) {
+        candies.push_back(candy);
+    }
+    int ans = candyStepCount(targetSweetness, candies);
+    cout<<ans;
+}
