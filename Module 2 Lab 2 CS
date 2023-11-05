@@ -1,0 +1,25 @@
+Code 1
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int minimumNumbers(int sum, int k) {
+    if (sum == 0) {
+        return 0;
+    }
+    for (int i = 1; i <= 10; ++i) {
+        if ((i * k) % 10 == sum % 10 && i * k <= sum) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int num, k;
+    scanf("%d %d", &num, &k);
+    int ans = minimumNumbers(num, k);
+    printf("%d\n", ans);
+    return 0;
+}
