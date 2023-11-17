@@ -1,0 +1,146 @@
+Code 1 Valid Sudoku
+#include<bits/stdc++.h>
+using namespace std;
+bool validSudoku(vector<vector<char>>& sudoku) {
+   int row = 0, col = 0, i = 0, block = 0;
+   int count[9];
+   for (row = 0; row < 9; ++row){
+      memset(count, 0, 9 * sizeof(int));
+      for (col = 0; col < 9; ++col){
+         if (sudoku[row][col] != '.')
+            ++count[sudoku[row][col]-'1'];
+      }
+      for (i = 0; i < 9; ++i)
+         if (count[i] > 1)
+            return false;
+   }
+   for (col = 0; col < 9; ++col){
+      memset(count, 0, 9 * sizeof(int));
+      for (row = 0; row < 9; ++row){
+         if (sudoku[row][col] != '.')
+            ++count[sudoku[row][col]-'1'];
+      }
+      for (i = 0; i < 9; ++i)
+         if (count[i] > 1)
+            return false;
+   }
+   int block_row = 0, block_col = 0;
+   for (block = 0; block < 9; ++block){
+      block_row = (block / 3) * 3, block_col = (block % 3) * 3;
+      memset(count, 0, 9 * sizeof(int));
+      for (row = block_row; row < (block_row + 3); ++row)
+      for (col = block_col; col < (block_col + 3); ++col)
+         if (sudoku[row][col] != '.')
+            ++count[sudoku[row][col] - '1'];
+      for (i = 0; i < 9; ++i)
+            if (count[i] > 1)
+         return false;
+   }
+   return true;
+}
+int main(){
+   vector<vector<char> > sudoku= {
+      {'5','3','.','.','7','.','.','.','.'},
+      {'5','.','.','1','9','5','.','.','.'},
+      {'.','9','8','.','.','.','.','6','.'},
+      {'8','.','.','.','6','.','.','.','3'},
+      {'4','.','.','8','.','3','.','.','1'},
+      {'7','.','.','.','2','.','.','.','6'},
+      {'.','6','.','.','.','.','2','8','.'},
+      {'.','.','.','4','1','9','.','.','5'},
+      {'.','.','.','.','8','.','.','7','9'}
+   };
+   bool ans= validSudoku(sudoku);
+   if(ans){
+      cout<<"YES"<<endl;
+   } else {
+      cout<<"NO"<<endl;
+   }
+   return 0;
+}
+Code 2 Quueue using two stacks
+#include <iostream>
+#include <stack>
+
+class CustomQueue {
+public:
+    void enqueue(int x) {
+        enqueue_stack.push(x);
+    }
+
+    int dequeue() {
+        if (dequeue_stack.empty()) {
+            if (enqueue_stack.empty()) {
+                return -1; // Queue is empty
+            }
+            while (!enqueue_stack.empty()) {
+                dequeue_stack.push(enqueue_stack.top());
+                enqueue_stack.pop();
+            }
+        }
+        int front = dequeue_stack.top();
+        dequeue_stack.pop();
+        return front;
+    }
+
+    int front() {
+        if (dequeue_stack.empty()) {
+            if (enqueue_stack.empty()) {
+                return -1; // Queue is empty
+            }
+            while (!enqueue_stack.empty()) {
+                dequeue_stack.push(enqueue_stack.top());
+                enqueue_stack.pop();
+            }
+        }
+        return dequeue_stack.top();
+    }
+
+private:
+    std::stack<int> enqueue_stack;
+    std::stack<int> dequeue_stack;
+};
+
+int main() {
+    CustomQueue cq;
+    std::string input;
+    std::string query;
+    
+
+    std::getline(std::cin, input);
+
+    std::string delimiter = ",";
+    size_t pos = 0;
+
+    std::string result_output;
+
+    while ((pos = input.find(delimiter)) != std::string::npos) {
+        query = input.substr(0, pos);
+        input.erase(0, pos + delimiter.length());
+
+        if (query == "2") {
+            int result = cq.dequeue();
+            if (result_output.empty()) {
+                result_output += std::to_string(result);
+            } else {
+                result_output += " " + std::to_string(result);
+            }
+        } else if (query == "3") {
+            int result = cq.front();
+            if (result_output.empty()) {
+                result_output += std::to_string(result);
+            } else {
+                result_output += " " + std::to_string(result);
+            }
+        } else if (query.substr(0, 2) == "1 ") {
+            int x = std::stoi(query.substr(2));
+            cq.enqueue(x);
+        }
+    }
+
+    std::cout << result_output << std::endl;
+
+    return 0;
+}
+
+                                                                                                                            
