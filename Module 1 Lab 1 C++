@@ -1,0 +1,93 @@
+CODE -1 
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <cctype>
+#include <iomanip>
+using namespace std;
+
+void analyzeString(string str){
+    int upper =0,lower=0,number=0,special=0;
+    //total count on char in the string
+    int total = str.length();
+    //counting the number of uppercase,lowercase,numbers and special chars
+    for(int i =0;i<total;i++){
+        if(str[i]>='A' && str[i] <='Z'){
+        upper++;
+        }
+        else if(str[i]>='a'&& str[i]<='z'){
+        lower++;
+        }
+        else if(str[i]>='0' && str[i]<='9'){
+        number++;
+        }
+        else{
+        special++;
+        }
+    }
+    //finding the percentage of each of them
+    double upperPercentage = (static_cast<double>(upper)/total)*100.0;
+    double lowerPercentage = (static_cast<double>(lower)/total)*100.0;
+    double numberPercentage = (static_cast<double>(number)/total)*100.0;
+    double specialPercentage = (static_cast<double>(special)/total)*100.0;
+    //printing the output by setting precision upto 3
+    cout<<fixed<<setprecision(3)<< upperPercentage<<"%"<<endl;
+    cout<<fixed<<setprecision(3)<< lowerPercentage<<"%"<<endl;
+    cout<<fixed<<setprecision(3)<< numberPercentage<<"%"<<endl;
+    cout<<fixed<<setprecision(3)<< specialPercentage<<"%"<<endl;
+ 
+}
+
+int main() {
+    string str;
+    cin>>str;
+    analyzeString(str);
+    return 0;
+}
+CODE -2
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int findLongestSubarray(int arr[], int n){
+    int sum =0;
+    int maxSize = -1,startIndex;
+    
+    for(int i=0;i<n-1;i++){
+    sum = (arr[i]==0)?-1:1;
+    for(int j=i+1;j<n;j++){
+        (arr[j]==0)?(sum+=-1):(sum+=1);
+        if(sum==0&&maxSize<j-i+1){
+            maxSize = j-i+1;
+            startIndex=i;
+        }
+    }
+    }
+   
+   if(maxSize==-1){
+   cout<<"No such subarray";
+   }
+   else{
+   cout<<startIndex+maxSize;
+   }
+   
+   return maxSize;
+}
+
+int main() {
+   //dynamically taking the input as the size is not given
+   int size =100;
+   int* arr = (int*)malloc(sizeof(int)*100);
+   int input;
+   
+   //taking input of the array
+   for(int i =0;i<100;i++){
+   cin>>input;
+   arr[i] = input;   
+   }
+   
+   //calling the function
+   findLongestSubarray(arr,size);
+   return 0;
+}
+                                                                                                                            
