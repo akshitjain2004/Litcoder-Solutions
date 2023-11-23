@@ -1,0 +1,66 @@
+MINIMUM SORTED ARRAY
+def findMin(nums):
+    left, right = 0, len(nums) - 1
+
+    while left < right:
+        mid = left + (right - left) // 2
+
+        # If the mid element is greater than the right element, the minimum must be in the right half
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        # If the mid element is less than or equal to the right element, the minimum must be in the left half
+        else:
+            right = mid
+
+    return nums[left]
+
+# Get input from the user
+nums = list(map(int, input("Enter the rotated sorted array elements separated by space: ").split()))
+
+# Call the function with user input
+result = findMin(nums)
+print(result)
+
+
+4SUM
+def fourSum(nums, target):
+    nums.sort()
+    result = []
+
+    for i in range(len(nums) - 3):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        for j in range(i + 1, len(nums) - 2):
+            if j > i + 1 and nums[j] == nums[j - 1]:
+                continue
+
+            left, right = j + 1, len(nums) - 1
+
+            while left < right:
+                curr_sum = nums[i] + nums[j] + nums[left] + nums[right]
+
+                if curr_sum == target:
+                    result.append([nums[i], nums[j], nums[left], nums[right]])
+
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+
+                    left += 1
+                    right -= 1
+                elif curr_sum < target:
+                    left += 1
+                else:
+                    right -= 1
+
+    return result
+
+# Get input from the user
+nums = list(map(int, input("Enter the array elements separated by space: ").split()))
+target = int(input("Enter the target value: "))
+
+# Call the function with user input
+result = fourSum(nums, target)
+print(result)
