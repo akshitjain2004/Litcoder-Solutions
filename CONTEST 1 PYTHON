@@ -1,0 +1,51 @@
+CODE 1 STRING ANALYSIS
+def analyze_string(email):
+    total_chars = len(email)
+    uppercase_count = sum(1 for char in email if char.isupper())
+    lowercase_count = sum(1 for char in email if char.islower())
+    digit_count = sum(1 for char in email if char.isdigit())
+    other_count = total_chars - (uppercase_count + lowercase_count + digit_count)
+
+    uppercase_percentage = (uppercase_count / total_chars) * 100
+    lowercase_percentage = (lowercase_count / total_chars) * 100
+    digit_percentage = (digit_count / total_chars) * 100
+    other_percentage = (other_count / total_chars) * 100
+
+    return uppercase_percentage, lowercase_percentage, digit_percentage, other_percentage
+
+# Get user input
+user_input = input("Enter the email address: ")
+
+# Analyze the string and display the results
+result = analyze_string(user_input)
+print(f"Uppercase letters: {result[0]:.3f}%")
+print(f"Lowercase letters: {result[1]:.3f}%")
+print(f"Digits: {result[2]:.3f}%")
+print(f"Other characters: {result[3]:.3f}%")
+
+
+CODE 2 - 
+def perform_operations(array_size, queries):
+    # Initialize the array with zeros
+    arr = [0] * array_size
+
+    # Perform the operations
+    for query in queries:
+        start, end, value = query
+        arr[start - 1:end] = [x + value for x in arr[start - 1:end]]
+
+    # Find and return the maximum value in the array
+    return max(arr)
+
+# Get user input
+array_size = int(input("Enter the array size: "))
+query_count = int(input("Enter the number of queries: "))
+
+queries = []
+for _ in range(query_count):
+    query = list(map(int, input().split()))
+    queries.append(query)
+
+# Perform operations and display the result
+result = perform_operations(array_size, queries)
+print("Maximum value in the array:", result)
