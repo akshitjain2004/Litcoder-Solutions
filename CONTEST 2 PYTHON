@@ -1,0 +1,74 @@
+CODE 1
+def preprocess_visitors(visitors):
+    prefix_sum = [0] * (len(visitors) + 1)
+
+    for i in range(len(visitors)):
+        prefix_sum[i + 1] = prefix_sum[i] + visitors[i]
+
+    return prefix_sum
+
+def total_visitors_in_range(prefix_sum, start, end):
+    return prefix_sum[end + 1] - prefix_sum[start]
+
+def process_queries(visitors, queries):
+    prefix_sum = preprocess_visitors(visitors)
+    results = []
+
+    for query in queries:
+        start, end = query
+        result = total_visitors_in_range(prefix_sum, start, end)
+        results.append(result)
+
+    return results
+
+def main():
+    try:
+        visitors = list(map(int, input("Enter the array of visitors separated by space: ").split()))
+        num_queries = int(input("Enter the number of queries: "))
+        
+        queries = []
+        for _ in range(num_queries):
+            query_input = input("Enter the start and end day of the query separated by space: ")
+            start, end = map(int, query_input.split())
+            queries.append((start, end))
+
+        output = process_queries(visitors, queries)
+        
+        print("Output:")
+        for result in output:
+            print(result)
+
+    except ValueError:
+        print("Input is not in the correct format or missing. Please enter valid input.")
+
+if __name__ == "__main__":
+    main()
+
+CODE 2
+def count_zero_subarrays(nums):
+    count = 0  # Initialize count of zero-filled subarrays
+    consecutive_zeros = 0  # Initialize count of consecutive zeros
+
+    for num in nums:
+        if num == 0:
+            consecutive_zeros += 1
+        else:
+            # If the current element is not zero, add the count of zero-filled subarrays
+            count += (consecutive_zeros * (consecutive_zeros + 1)) // 2
+            consecutive_zeros = 0  # Reset consecutive_zeros count
+
+    # Add the count for the last group of consecutive zeros (if any)
+    count += (consecutive_zeros * (consecutive_zeros + 1)) // 2
+
+    return count
+
+try:
+    # Get user input for the array
+    nums = list(map(int, input("Enter the array elements separated by space: ").split()))
+
+    # Call the function and display the result
+    result = count_zero_subarrays(nums)
+    print("Number of zero-filled subarrays:", result)
+
+except ValueError:
+    print("Input is not in the correct format.")
