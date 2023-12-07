@@ -16,7 +16,6 @@ def analyze_string(email):
 # Get user input
 user_input = input("Enter the email address: ")
 
-# Analyze the string and display the results
 result = analyze_string(user_input)
 print(f"Uppercase letters: {result[0]:.3f}%")
 print(f"Lowercase letters: {result[1]:.3f}%")
