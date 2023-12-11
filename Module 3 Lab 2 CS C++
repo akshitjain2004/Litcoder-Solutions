@@ -1,4 +1,4 @@
-Code 1 Sliding Subarray Beauty
+Code 1 Sliding Subarray Beautyyy
 You are given an array of integers arr and an integer k. Your task is to find the given n th position of the smallest integer in each contiguous subarray of size k and print these smallest integers. A subarray is a contiguous non-empty sequence of elements within the original array. For each subarray of size k, you need to find the given n th position of the smallest integer within that subarray. The given n th position of the smallest integer in a subarray is the integer that appears at the given n th position when the subarray is sorted in ascending order. . Your task is to return an integer array containing n - k + 1 elements, denoting the beauty of the subarrays in order from the first index in the array.
 
 
